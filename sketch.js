@@ -44,10 +44,11 @@ function draw() {
     textSize(35);
     text('Clique pour restart', width/2-150, height/2  + 150 );
     fill(255);
-    if (mouseIsPressed) {
+    if (mouseIsPressed || keyCode == ENTER) {
         s.reset();
         frate = 10;
         frameRate(frate);
+        b= [];
         isdead = false;
       }
   }else{
