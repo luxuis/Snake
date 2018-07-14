@@ -5,6 +5,9 @@ var bombe;
 var b = [] ;
 var frate=10;
 var isdead = false;
+var counter = 0;
+var highscore = 0;
+
 
 function preload() {
   pomme = loadImage('images/pomme.png');
@@ -42,13 +45,21 @@ function draw() {
   if (isdead){
     image(crane,width/2-125,height/2-125,250,250);
     textSize(35);
-    text('Clique pour restart', width/2-150, height/2  + 150 );
-    fill(255);
+    fill(255,255,255);
+    textAlign(CENTER);
+    text('Clique pour restart', width/2, height/2  + 150 );
+    text('Score: '+ counter,width/2, height/2  + 200);
+    if (highscore < counter) {
+      highscore = counter;
+    }
+    text('Highscore: '+ highscore,width/2, height/2  + 250);
+
     if (mouseIsPressed || keyCode == ENTER) {
         s.reset();
         frate = 10;
         frameRate(frate);
         b= [];
+        counter = 0;
         isdead = false;
       }
   }else{
@@ -59,6 +70,10 @@ function draw() {
       b[i].update(s);
       b[i].show();
     }
+    textSize(35);
+    fill(0, 102, 153);
+    text(counter,20,35);
+
     s.show();
     f.show();
   }

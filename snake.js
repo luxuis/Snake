@@ -27,7 +27,7 @@ function Snake() {
         isdead = true;
         }
       }
-    
+
   }
   this.move = function () {
     if (this.total === this.tail.length ) {
@@ -40,12 +40,12 @@ function Snake() {
     this.y += this.yspeed*scl;
     if (this.x < 0) {
       this.x = width;
-    }else if (this.x > width) {
+    }else if (this.x >= width) {
       this.x = 0;
     }
     if (this.y < 0) {
       this.y = height ;
-    } else if ( this.y > height) {
+    } else if ( this.y >= height) {
       this.y = 0 ;
     }
   }

@@ -16,6 +16,7 @@ function Food(){
       newBombe();
       frate += 1;
       frameRate(frate);
+      counter ++;
     }
   }
 }
