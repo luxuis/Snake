@@ -2,7 +2,22 @@ var scl=20;
 var pomme;
 var crane;
 var bombe;
+var headUp;
+var headDown;
+var headR;
+var headL;
+var tailUp;
+var tailDown;
+var tailR;
+var tailL;
+var bodyH;
+var bodyV;
+var turnLeftDown;
+var turnRightDown;
+var turnRightUp;
+var turnLeftUp;
 var b = [] ;
+var actions = [];
 var frate=10;
 var isdead = false;
 var counter = 0;
@@ -13,6 +28,20 @@ function preload() {
   pomme = loadImage('images/pomme.png');
   crane = loadImage('images/crane.png');
   bombe = loadImage('images/bombe.png');
+  headUp = loadImage('images/headUp.png');
+  headDown = loadImage('images/headDown.png');
+  headR = loadImage('images/headR.png');
+  headL = loadImage('images/headL.png');
+  bodyH = loadImage('images/bodyH.png');
+  bodyV = loadImage('images/bodyV.png');
+  tailUp = loadImage('images/tailUp.png');
+  tailDown = loadImage('images/tailDown.png');
+  tailR = loadImage('images/tailR.png');
+  tailL = loadImage('images/tailL.png');
+  turnLeftDown = loadImage('images/turnLeftDown.png');
+  turnRightDown = loadImage('images/turnRightDown.png');
+  turnRightUp = loadImage('images/turnRightUp.png');
+  turnLeftUp = loadImage('images/turnLeftUp.png');
 }
 
 function setup() {
@@ -20,24 +49,28 @@ function setup() {
   s = new Snake();
   s.reset();
   f = new Food();
-  b[0] = new Bombe();
+  b[0] = new Bombe(s);
   frameRate(frate);
 }
 
 function keyPressed() {
   if ( keyCode == UP_ARROW) {
-    s.dir(0,-1);
+    actions.push("up");
+    //s.dir(0,-1);
   } else if (keyCode == DOWN_ARROW) {
-    s.dir(0,1);
+    //s.dir(0,1);
+    actions.push("down");
   } else if (keyCode == LEFT_ARROW) {
-    s.dir(-1,0);
+    //s.dir(-1,0);
+    actions.push("left");
   }  else if (keyCode == RIGHT_ARROW) {
-    s.dir(1,0);
+    //s.dir(1,0);
+    actions.push("right");
   }
 }
 
 function newBombe(){
-  b.push(new Bombe);
+  b.push(new Bombe(s));
 }
 
 function draw() {
@@ -59,11 +92,31 @@ function draw() {
         frate = 10;
         frameRate(frate);
         b= [];
+        b[0] = new Bombe(s);
         counter = 0;
         isdead = false;
       }
   }else{
     s.death();
+    if (actions.length != 0) {
+    switch (actions[0]) {
+      case "up":
+      s.dir(0,-1);
+      break;
+      case "down":
+      s.dir(0,1);
+      break;
+      case "left":
+      s.dir(-1, 0);
+      break;
+      case "right":
+      s.dir(1, 0);
+      break;
+      default:
+      break;
+    }
+    actions.shift();
+  }
     s.move();
     f.update(s);
     for (var i = 0; i < b.length; i++) {
