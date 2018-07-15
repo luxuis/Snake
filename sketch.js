@@ -12,10 +12,10 @@ var tailR;
 var tailL;
 var bodyH;
 var bodyV;
-var turnLeftDown;
-var turnRightDown;
-var turnRightUp;
-var turnLeftUp;
+var turnRightDown_UpLeft;
+var turnRightUp_DownLeft;
+var turnUpRight_LeftDown;
+var turnUpRight_LeftUp;
 var b = [] ;
 var actions = [];
 var frate=10;
@@ -38,10 +38,10 @@ function preload() {
   tailDown = loadImage('images/tailDown.png');
   tailR = loadImage('images/tailR.png');
   tailL = loadImage('images/tailL.png');
-  turnLeftDown = loadImage('images/turnLeftDown.png');
-  turnRightDown = loadImage('images/turnRightDown.png');
-  turnRightUp = loadImage('images/turnRightUp.png');
-  turnLeftUp = loadImage('images/turnLeftUp.png');
+  turnRightDown_UpLeft = loadImage('images/turnRightDown_UpLeft.png');
+  turnRightUp_DownLeft = loadImage('images/turnRightUp_DownLeft.png');
+  turnUpRight_LeftDown = loadImage('images/turnUpRight_LeftDown.png');
+  turnUpRight_LeftUp = loadImage('images/turnUpRight_LeftUp.png');
 }
 
 function setup() {
