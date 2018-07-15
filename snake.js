@@ -90,22 +90,22 @@ function Snake() {
            sprite = bodyV;
          }
 
-      if (this.tail[i-1]!=null && this.tail[i+1] != null){
-        if (this.tail[i-1].type == "R" && this.tail[i+1].type == "Down"
-            || this.tail[i-1].type == "Up" && this.tail[i+1].type == "L"){
-          sprite = turnRightDown_UpLeft;
-        }
-        else if (this.tail[i-1].type == "R" && this.tail[i+1].type == "Up"
-            || this.tail[i-1].type == "Down" && this.tail[i+1].type == "L"){
-          sprite = turnRightUp_DownLeft;
-        }
-        else if (this.tail[i-1].type == "L" && this.tail[i+1].type == "Down"
-            || this.tail[i-1].type == "Up" && this.tail[i+1].type == "R"){
+      if (this.tail[i-1] != null){
+        if (this.tail[i].type == "Down" && this.tail[i-1].type == "L"
+            || this.tail[i].type == "R" && this.tail[i-1].type == "Up"){
           sprite = turnUpRight_LeftDown;
         }
-        else if (this.tail[i-1].type == "Up" && this.tail[i+1].type == "Right"
-            || this.tail[i-1].type == "Left" && this.tail[i+1].type == "Up"){
-          sprite = turnUpRight_LeftUp;
+        else if (this.tail[i].type == "Up" && this.tail[i-1].type == "R"
+            || this.tail[i].type == "L" && this.tail[i-1].type == "Down"){
+          sprite = turnRightUp_DownLeft;
+        }
+        else if (this.tail[i].type == "L" && this.tail[i-1].type == "Up"
+            || this.tail[i].type == "Down" && this.tail[i-1].type == "R"){
+          sprite = turnRightDown_UpLeft;
+        }
+        else if (this.tail[i].type == "Up" && this.tail[i-1].type == "L"
+            || this.tail[i].type == "R" && this.tail[i-1].type == "Down"){
+          sprite = turnDownRight_LeftUp;
         }
       }
     }

@@ -1,4 +1,4 @@
-var scl=20;
+var scl=40;
 var pomme;
 var crane;
 var bombe;
@@ -15,13 +15,14 @@ var bodyV;
 var turnRightDown_UpLeft;
 var turnRightUp_DownLeft;
 var turnUpRight_LeftDown;
-var turnUpRight_LeftUp;
+var turnDownRight_LeftUp;
 var b = [] ;
 var actions = [];
 var frate=10;
 var isdead = false;
 var counter = 0;
 var highscore = 0;
+var pause = false;
 
 
 function preload() {
@@ -41,7 +42,7 @@ function preload() {
   turnRightDown_UpLeft = loadImage('images/turnRightDown_UpLeft.png');
   turnRightUp_DownLeft = loadImage('images/turnRightUp_DownLeft.png');
   turnUpRight_LeftDown = loadImage('images/turnUpRight_LeftDown.png');
-  turnUpRight_LeftUp = loadImage('images/turnUpRight_LeftUp.png');
+  turnDownRight_LeftUp = loadImage('images/turnDownRight_LeftUp.png');
 }
 
 function setup() {
@@ -49,7 +50,7 @@ function setup() {
   s = new Snake();
   s.reset();
   f = new Food();
-  b[0] = new Bombe(s);
+  newBombe();
   frameRate(frate);
 }
 
@@ -66,15 +67,45 @@ function keyPressed() {
   }  else if (keyCode == RIGHT_ARROW) {
     //s.dir(1,0);
     actions.push("right");
+  } else if (keyCode == 80 ) {
+    pause = !pause;
+  } else if (keyCode == 66) {
+    newBombe();
   }
 }
 
 function newBombe(){
-  b.push(new Bombe(s));
+  var infront = new Boolean(true);
+  var freeSpace = false;
+  var row;
+  var col;
+  while (infront || !freeSpace) {
+    infront = false;
+    col =floor(random(floor(height/scl)));
+    row =floor(random(floor(width/scl)));
+    if ((row*scl == s.y && s.xspeed != 0)
+        || (col*scl == s.x && s.yspeed != 0)) {
+      infront = true;
+    }
+    freeSpace = true;
+    for (var i = 0; i < b.length; i++) {
+      if (b[i].rows == row && b[i].cols == col){
+        freeSpace = false;
+      }
+    }
+    if (f.cols == col && f.rows == row) {
+      freeSpace = false;
+    }
+  }
+  b.push(new Bombe(col, row));
 }
 
 function draw() {
   background(50);
+  if (pause) {
+
+  }
+  else {
   if (isdead){
     image(crane,width/2-125,height/2-125,250,250);
     textSize(35);
@@ -88,37 +119,39 @@ function draw() {
     text('Highscore: '+ highscore,width/2, height/2  + 250);
 
     if (mouseIsPressed || keyCode == ENTER) {
-        s.reset();
-        frate = 10;
-        frameRate(frate);
-        b= [];
-        b[0] = new Bombe(s);
-        counter = 0;
-        isdead = false;
-      }
-  }else{
+      s.reset();
+      frate = 10;
+      frameRate(frate);
+      b= [];
+      newBombe();
+      counter = 0;
+      isdead = false;
+    }
+  }
+  else{
     s.death();
     if (actions.length != 0) {
-    switch (actions[0]) {
-      case "up":
-      s.dir(0,-1);
-      break;
-      case "down":
-      s.dir(0,1);
-      break;
-      case "left":
-      s.dir(-1, 0);
-      break;
-      case "right":
-      s.dir(1, 0);
-      break;
-      default:
-      break;
+      switch (actions[0]) {
+        case "up":
+        s.dir(0,-1);
+        break;
+        case "down":
+        s.dir(0,1);
+        break;
+        case "left":
+        s.dir(-1, 0);
+        break;
+        case "right":
+        s.dir(1, 0);
+        break;
+        default:
+        break;
+      }
+      actions.shift();
     }
-    actions.shift();
-  }
     s.move();
     f.update(s);
+
     for (var i = 0; i < b.length; i++) {
       b[i].update(s);
       b[i].show();
@@ -130,4 +163,5 @@ function draw() {
     s.show();
     f.show();
   }
+}
 }
