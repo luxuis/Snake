@@ -1,4 +1,8 @@
+//peut changer
 var scl=40;
+var frate=10;
+
+//Sprites
 var pomme;
 var crane;
 var bombe;
@@ -16,9 +20,16 @@ var turnRightDown_UpLeft;
 var turnRightUp_DownLeft;
 var turnUpRight_LeftDown;
 var turnDownRight_LeftUp;
+
+//Sounds
+var music;
+
+//Fonts
+var font;
+
+//Variables
 var b = [] ;
 var actions = [];
-var frate=10;
 var isdead = false;
 var counter = 0;
 var highscore = 0;
@@ -26,6 +37,9 @@ var pause = false;
 
 
 function preload() {
+  music = loadSound('93 - Menu (Full).mp3');
+
+  font = loadFont('font.ttf');
   pomme = loadImage('images/pomme.png');
   crane = loadImage('images/crane.png');
   bombe = loadImage('images/bombe.png');
@@ -46,9 +60,11 @@ function preload() {
 }
 
 function setup() {
+  music.loop();
   createCanvas(600, 600);
   s = new Snake();
   s.reset();
+  f = null;
   f = new Food();
   newBombe();
   frameRate(frate);
@@ -67,51 +83,62 @@ function keyPressed() {
   }  else if (keyCode == RIGHT_ARROW) {
     //s.dir(1,0);
     actions.push("right");
-  } else if (keyCode == 80 ) {
+  } else if (keyCode == 80 && !isdead) {
     pause = !pause;
   } else if (keyCode == 66) {
     newBombe();
   }
 }
 
-function newBombe(){
-  var infront = new Boolean(true);
+function randomFreeLocation(){
   var freeSpace = false;
   var row;
   var col;
-  while (infront || !freeSpace) {
-    infront = false;
+  while (!freeSpace) {
     col =floor(random(floor(height/scl)));
     row =floor(random(floor(width/scl)));
-    if ((row*scl == s.y && s.xspeed != 0)
-        || (col*scl == s.x && s.yspeed != 0)) {
-      infront = true;
-    }
     freeSpace = true;
     for (var i = 0; i < b.length; i++) {
       if (b[i].rows == row && b[i].cols == col){
         freeSpace = false;
       }
     }
-    if (f.cols == col && f.rows == row) {
+    if (f != null && f.cols == col && f.rows == row) {
       freeSpace = false;
     }
+  }
+  return createVector(col, row);
+}
+
+function newBombe(){
+  var infront = new Boolean(true);
+  var row;
+  var col;
+  var temp;
+  while (infront) {
+    infront = false;
+    temp = randomFreeLocation();
+    col = temp.x;
+    row = temp.y;
+    if ((row*scl == s.y && s.xspeed != 0)
+    || (col*scl == s.x && s.yspeed != 0)) {
+      infront = true;
+    }
+
   }
   b.push(new Bombe(col, row));
 }
 
 function draw() {
   background(50);
-  if (pause) {
 
-  }
-  else {
   if (isdead){
     image(crane,width/2-125,height/2-125,250,250);
     textSize(35);
     fill(255,255,255);
     textAlign(CENTER);
-    text('Clique pour restart', width/2, height/2  + 150 );
+    textFont(font);
+    text('CLICK TO RESTART', width/2, height/2  + 150 );
     text('Score: '+ counter,width/2, height/2  + 200);
     if (highscore < counter) {
       highscore = counter;
@@ -149,19 +176,28 @@ function draw() {
       }
       actions.shift();
     }
-    s.move();
-    f.update(s);
-
+    if (!pause) {
+      s.move();
+      f.update(s);
+    }
     for (var i = 0; i < b.length; i++) {
       b[i].update(s);
       b[i].show();
     }
+
+    s.show();
+    f.show();
     textSize(35);
     fill(0, 102, 153);
     text(counter,20,35);
 
-    s.show();
-    f.show();
+    if (pause) {
+      textSize(35);
+      fill(255);
+      textAlign(CENTER);
+      text('PAUSED', width/2, height/2);
+      textSize(20);
+      text('PRESS P TO RESUME', width/2, height/1.7);
+    }
   }
-}
 }

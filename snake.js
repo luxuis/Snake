@@ -1,8 +1,8 @@
 function Snake() {
 
   this.reset = function() {
-    this.x=width/2;
-    this.y=height/2;
+    this.x=floor(width/scl/2)*scl;
+    this.y=floor(height/scl/2)*scl;
     this.xspeed = 1;
     this.yspeed = 0;
     this.total = 0;
@@ -54,12 +54,12 @@ function Snake() {
     this.x += this.xspeed*scl;
     this.y += this.yspeed*scl;
     if (this.x < 0) {
-      this.x = width;
+      this.x = width-scl;
     }else if (this.x >= width) {
       this.x = 0;
     }
     if (this.y < 0) {
-      this.y = height ;
+      this.y = height -scl;
     } else if ( this.y >= height) {
       this.y = 0 ;
     }

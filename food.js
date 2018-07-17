@@ -1,6 +1,7 @@
 function Food(){
-  this.cols=floor(random(floor(width/scl)));
-  this.rows=floor(random(floor(height/scl)));
+  temp = randomFreeLocation();
+  this.cols= temp.x;
+  this.rows= temp.y;
 
   this.show = function() {
     fill(255,0,100);
@@ -10,8 +11,9 @@ function Food(){
   this.update = function(s) {
     d = dist(this.cols*scl, this.rows*scl , s.x,s.y);
     if (d < 2) {
-      this.cols=floor(random(floor(width/scl)));
-      this.rows=floor(random(floor(height/scl)));
+      temp = randomFreeLocation();
+      this.cols= temp.x;
+      this.rows= temp.y;
       s.eat();
       newBombe();
       frate += 1;
