@@ -23,6 +23,8 @@ var turnDownRight_LeftUp;
 
 //Sounds
 var music;
+var normalRate;
+var volSlider;
 
 //Fonts
 var font;
@@ -38,6 +40,7 @@ var pause = false;
 
 function preload() {
   music = loadSound('93 - Menu (Full).mp3');
+  normalRate = music.rate();
 
   font = loadFont('font.ttf');
   pomme = loadImage('images/pomme.png');
@@ -68,6 +71,8 @@ function setup() {
   f = new Food();
   newBombe();
   frameRate(frate);
+  volSlider = createSlider(0, 255, 100);
+  volSlider.position(620,20);
 }
 
 function keyPressed() {
@@ -131,8 +136,11 @@ function newBombe(){
 
 function draw() {
   background(50);
-
+  var vol = volSlider.value()/100;
+  music.amp(vol);
   if (isdead){
+    music.rate(normalRate);
+    music.stop();
     image(crane,width/2-125,height/2-125,250,250);
     textSize(35);
     fill(255,255,255);
@@ -149,6 +157,8 @@ function draw() {
       s.reset();
       frate = 10;
       frameRate(frate);
+      music.loop();
+      music.playMode('restart');
       b= [];
       newBombe();
       counter = 0;

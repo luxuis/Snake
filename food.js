@@ -17,6 +17,7 @@ function Food(){
       s.eat();
       newBombe();
       frate += 1;
+      music.rate(music.rate()+0.04);
       frameRate(frate);
       counter ++;
     }
