@@ -1,6 +1,7 @@
 //peut changer
-var scl=40;
+var scl=20;
 var frate=10;
+var tempScale = 20;
 
 //Sprites
 var pomme;
@@ -36,6 +37,8 @@ var isdead = false;
 var counter = 0;
 var highscore = 0;
 var pause = false;
+var buttonScale30;
+var buttonScale15;
 
 
 function preload() {
@@ -73,6 +76,17 @@ function setup() {
   frameRate(frate);
   volSlider = createSlider(0, 255, 100);
   volSlider.position(620,20);
+  buttonScale15 = createButton('15*15');
+  buttonScale15.position(620,40);
+  buttonScale15.mousePressed(function() { setScale(15);});
+  buttonScale15 = createButton('30*30');
+  buttonScale15.position(620,60);
+  buttonScale15.mousePressed(function() { setScale(30);});
+
+}
+
+function setScale(x) {
+  tempScale = 600/x;
 }
 
 function keyPressed() {
@@ -154,6 +168,7 @@ function draw() {
     text('Highscore: '+ highscore,width/2, height/2  + 250);
 
     if (mouseIsPressed || keyCode == ENTER) {
+      scl = tempScale;
       s.reset();
       frate = 10;
       frameRate(frate);
