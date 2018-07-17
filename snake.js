@@ -25,6 +25,7 @@ function Snake() {
       d = dist(this.x,this.y,this.tail[i].pos.x,this.tail[i].pos.y)
       if (d<2) {
         isdead = true;
+        death.play();
         }
       }
 

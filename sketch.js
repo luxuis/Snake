@@ -24,6 +24,7 @@ var turnDownRight_LeftUp;
 
 //Sounds
 var music;
+var death;
 var normalRate;
 var volSlider;
 
@@ -43,6 +44,7 @@ var buttonScale15;
 
 function preload() {
   music = loadSound('93 - Menu (Full).mp3');
+  death = loadSound('death.mp3');
   normalRate = music.rate();
 
   font = loadFont('font.ttf');
