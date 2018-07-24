@@ -17,7 +17,10 @@ function Food(){
       s.eat();
       newBombe();
       frate += 1;
-      music.rate(music.rate()+0.04);
+
+      //Ca c'est pour si tu veux vomir par les oreilles.
+      //music.rate(music.rate()+0.04);
+
       frameRate(frate);
       counter ++;
     }

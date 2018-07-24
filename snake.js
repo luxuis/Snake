@@ -115,8 +115,6 @@ function Snake() {
     image(sprite,this.tail[i].pos.x,this.tail[i].pos.y,scl,scl);
   }
 
-
-
     if (this.yspeed < 0) {
       image(headUp,this.x,this.y,scl,scl);
     }

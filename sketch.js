@@ -154,6 +154,7 @@ function draw() {
   background(50);
   var vol = volSlider.value()/100;
   music.amp(vol);
+  death.amp(vol);
   if (isdead){
     music.rate(normalRate);
     music.stop();
