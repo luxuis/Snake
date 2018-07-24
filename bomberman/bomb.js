@@ -4,7 +4,7 @@ function Bomb(x, y) {
   this.timer = 0;
 
   this.explode = function() {
-    
+
   }
 
   this.show = function() {

@@ -4,6 +4,8 @@ var isdead = false;
 var pause = false;
 var speed = 10;
 
+var frate= 60;
+
 var bomb;
 
 function preload() {
@@ -11,6 +13,7 @@ function preload() {
 }
 
 function setup() {
+  frameRate(frate);
   createCanvas(600, 600);
   player = new Bomberman();
   console.log(player);
@@ -53,7 +56,7 @@ function draw() {
     b[i].show();
     b[i].timer +=1;
 
-    if (b[i].timer ==3*60) {
+    if (b[i].timer ==3*frate) {
       b.splice(i,1);
     }
   }
